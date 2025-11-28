@@ -1,0 +1,24 @@
+.error-container {
+    background: #fee;
+    border: 2px solid #f88;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    color: #c33;
+    margin: 2rem 0;
+}
+
+.error-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.error-container h3 {
+    margin: 0 0 1rem 0;
+    color: #a00;
+}
+
+.error-container p {
+    margin: 0;
+    font-weight: 500;
+}
