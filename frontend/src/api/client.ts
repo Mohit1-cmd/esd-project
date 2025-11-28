@@ -7,6 +7,7 @@ export const apiClient = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
+    withCredentials: true, // Include cookies for session authentication
 });
 
 // Response interceptor for error handling
@@ -14,7 +15,14 @@ apiClient.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response) {
-            // Server responded with error
+            // Handle 401 Unauthorized - redirect to login
+            if (error.response.status === 401) {
+                // Only redirect if not already on login page or auth endpoint
+                if (!window.location.pathname.includes('/login') &&
+                    !error.config.url?.includes('/auth/user')) {
+                    window.location.href = '/login';
+                }
+            }
             console.error('API Error:', error.response.data);
         } else if (error.request) {
             // Request made but no response

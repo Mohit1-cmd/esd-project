@@ -1,8 +1,10 @@
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import './Header.css';
 
 const Header = () => {
   const location = useLocation();
+  const { user, logout } = useAuth();
 
   const isActive = (path: string) => {
     return location.pathname === path || location.pathname.startsWith(path + '/');
@@ -34,6 +36,17 @@ const Header = () => {
             Reports
           </Link>
         </nav>
+        {user && (
+          <div className="user-section">
+            <div className="user-info">
+              {user.picture && <img src={user.picture} alt={user.name} className="user-avatar" />}
+              <span className="user-name">{user.name}</span>
+            </div>
+            <button onClick={logout} className="logout-btn">
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );

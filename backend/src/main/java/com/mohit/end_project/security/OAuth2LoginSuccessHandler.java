@@ -44,7 +44,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         userRepository.save(user);
 
-        // Redirect to dashboard after successful login
-        response.sendRedirect("/dashboard");
+        // Redirect to frontend after successful login
+        response.sendRedirect("http://localhost:5173");
     }
 }
