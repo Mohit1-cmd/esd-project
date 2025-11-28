@@ -22,7 +22,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Disable CSRF for simplicity (enable in production)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login**", "/error**").permitAll()
+                        .requestMatchers("/", "/login**", "/error**", "/api/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2Login(oauth2 -> oauth2
                         .successHandler(oAuth2LoginSuccessHandler));
