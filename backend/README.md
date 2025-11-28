@@ -10,10 +10,14 @@
 
 1. Ensure MySQL is running on `localhost:3306`
 2. The application will auto-create database `esd_db` on first run
-3. Update credentials in `src/main/resources/application.properties`:
-   ```properties
-   spring.datasource.username=your_mysql_username
-   spring.datasource.password=your_mysql_password
+3. Create a `.env` file in the project root (see `.env.example`):
+   ```bash
+   cp .env.example .env
+   ```
+4. Update `.env` with your MySQL credentials:
+   ```bash
+   MYSQL_USERNAME=your_mysql_username
+   MYSQL_PASSWORD=your_mysql_password
    ```
 
 ## Google OAuth Setup
@@ -28,25 +32,39 @@
    http://localhost:8080/login/oauth2/code/google
    ```
 7. Copy **Client ID** and **Client Secret**
-8. Update `src/main/resources/application.properties`:
-   ```properties
-   spring.security.oauth2.client.registration.google.client-id=YOUR_CLIENT_ID
-   spring.security.oauth2.client.registration.google.client-secret=YOUR_CLIENT_SECRET
+8. Update your `.env` file:
+   ```bash
+   GOOGLE_CLIENT_ID=your_client_id_here
+   GOOGLE_CLIENT_SECRET=your_client_secret_here
    ```
 
 ## Build & Run
 
-### Using Maven Wrapper (Recommended)
+### Option 1: Using the run script (Easiest - Recommended)
 
 ```bash
-# Build the project
-./mvnw clean install --toolchains .mvn/toolchains.xml
-
-# Run the application
-./mvnw spring-boot:run --toolchains .mvn/toolchains.xml
+./run.sh
 ```
 
-### Alternative: Set JAVA_HOME to Java 17
+This script automatically:
+- Loads environment variables from `.env`
+- Uses Java 17 via toolchains
+- Starts the Spring Boot application
+
+### Option 2: Manual Maven command
+
+Export environment variables and run with toolchains:
+```bash
+export $(grep -v '^#' .env | xargs)
+./mvnw spring-boot:run -t .mvn/toolchains.xml
+```
+
+Or set JAVA_HOME to Java 17:
+```bash
+export JAVA_HOME=/opt/homebrew/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents/Home
+export $(grep -v '^#' .env | xargs)
+./mvnw spring-boot:run
+```
 
 ```bash
 export JAVA_HOME=/opt/homebrew/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents/Home

@@ -90,6 +90,12 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<environmentVariables>
+						<MYSQL_USERNAME>${env.MYSQL_USERNAME}</MYSQL_USERNAME>
+						<MYSQL_PASSWORD>${env.MYSQL_PASSWORD}</MYSQL_PASSWORD>
+						<GOOGLE_CLIENT_ID>${env.GOOGLE_CLIENT_ID}</GOOGLE_CLIENT_ID>
+						<GOOGLE_CLIENT_SECRET>${env.GOOGLE_CLIENT_SECRET}</GOOGLE_CLIENT_SECRET>
+					</environmentVariables>
 				</configuration>
 			</plugin>
 			<plugin>
