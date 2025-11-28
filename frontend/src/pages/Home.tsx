@@ -76,20 +76,10 @@ const Home = () => {
             <h3>Manage Courses</h3>
             <p>View and manage course catalog</p>
           </Link>
-          <Link to="/enrollments" className="action-card">
-            <div className="action-icon">✏️</div>
-            <h3>Enrollments</h3>
-            <p>Enroll students and manage grades</p>
-          </Link>
           <Link to="/domains" className="action-card">
             <div className="action-icon">🌐</div>
-            <h3>Domains & Specializations</h3>
-            <p>Manage academic domains</p>
-          </Link>
-          <Link to="/admin/reports" className="action-card">
-            <div className="action-icon">📊</div>
-            <h3>Reports</h3>
-            <p>View specialization reports</p>
+            <h3>Domain Specialization</h3>
+            <p>Manage academic domains and specializations</p>
           </Link>
         </div>
       </div>

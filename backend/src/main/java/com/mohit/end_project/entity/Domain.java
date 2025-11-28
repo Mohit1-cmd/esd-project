@@ -13,7 +13,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "domains")
+@Table(name = "domain")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

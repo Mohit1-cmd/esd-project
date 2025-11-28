@@ -13,7 +13,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "specializations")
+@Table(name = "specialization")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

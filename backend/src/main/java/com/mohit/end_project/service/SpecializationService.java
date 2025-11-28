@@ -46,7 +46,7 @@ public class SpecializationService {
                 int credits = computeCreditsForStudentInSpecialization(student.getStudentId(),
                         specialization.getSpecializationId());
 
-                if (credits > 20) {
+                if (credits >= 20) {
                     StudentSpecializationDTO dto = new StudentSpecializationDTO();
                     dto.setStudentId(student.getStudentId());
                     dto.setRollNumber(student.getRollNumber());
@@ -91,7 +91,7 @@ public class SpecializationService {
             dto.setSpecializationName(specialization.getSpecializationName());
             dto.setDomainName(specialization.getDomain().getDomainName());
             dto.setTotalCredits(credits);
-            dto.setHasSpecialization(credits > 20);
+            dto.setHasSpecialization(credits >= 20);
 
             results.add(dto);
         }
@@ -119,7 +119,7 @@ public class SpecializationService {
                 int credits = computeCreditsForStudentInSpecialization(student.getStudentId(),
                         specialization.getSpecializationId());
 
-                if (credits > 20) {
+                if (credits >= 20) {
                     StudentSpecializationDTO dto = new StudentSpecializationDTO();
                     dto.setStudentId(student.getStudentId());
                     dto.setRollNumber(student.getRollNumber());
@@ -154,7 +154,7 @@ public class SpecializationService {
             int credits = computeCreditsForStudentInSpecialization(student.getStudentId(),
                     specializationId);
 
-            if (credits > 20) {
+            if (credits >= 20) {
                 StudentSpecializationDTO dto = new StudentSpecializationDTO();
                 dto.setStudentId(student.getStudentId());
                 dto.setRollNumber(student.getRollNumber());

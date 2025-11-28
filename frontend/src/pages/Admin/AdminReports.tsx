@@ -62,7 +62,7 @@ const AdminReports = () => {
   return (
     <div className="admin-reports">
       <div className="page-header">
-        <h1>Student Specializations Report</h1>
+        <h1>Domain Specializations</h1>
       </div>
 
       <div className="report-info">

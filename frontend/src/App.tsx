@@ -7,7 +7,11 @@ import Login from './pages/Login';
 import StudentsList from './pages/Students/StudentsList';
 import StudentForm from './pages/Students/StudentForm';
 import StudentDetail from './pages/Students/StudentDetail';
+import CoursesList from './pages/Courses/CoursesList';
+import CourseForm from './pages/Courses/CourseForm';
+import CourseDetail from './pages/Courses/CourseDetail';
 import AdminReports from './pages/Admin/AdminReports';
+
 import './App.css';
 
 function App() {
@@ -26,13 +30,17 @@ function App() {
             <Route path="students/:id" element={<StudentDetail />} />
             <Route path="students/:id/edit" element={<StudentForm />} />
             
-            {/* Admin Routes */}
-            <Route path="admin/reports" element={<AdminReports />} />
+            {/* Courses Routes */}
+            <Route path="courses" element={<CoursesList />} />
+            <Route path="courses/new" element={<CourseForm />} />
+            <Route path="courses/:id" element={<CourseDetail />} />
+            <Route path="courses/:id/edit" element={<CourseForm />} />
             
-            {/* Placeholder routes for future pages */}
-            <Route path="courses" element={<div className="page-placeholder"><h1>Courses</h1><p>Coming soon...</p></div>} />
-            <Route path="enrollments" element={<div className="page-placeholder"><h1>Enrollments</h1><p>Coming soon...</p></div>} />
-            <Route path="domains" element={<div className="page-placeholder"><h1>Domains & Specializations</h1><p>Coming soon...</p></div>} />
+            {/* Domains & Specializations - Now showing Reports */}
+            <Route path="domains" element={<AdminReports />} />
+            
+            {/* Admin Routes */}
+
           </Route>
         </Routes>
       </AuthProvider>

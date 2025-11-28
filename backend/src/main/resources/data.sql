@@ -1,264 +1,443 @@
--- Sample Data for Student Specialization System
+-- Comprehensive Sample Data for Student Specialization Management System
+-- This file contains ~60+ records across all tables
 
--- Insert Domains
-INSERT INTO domains (domain_name, description) VALUES
-('Computer Science', 'Core computer science and software engineering'),
-('Data Science', 'Data analytics, statistics, and machine learning'),
-('Artificial Intelligence', 'AI, machine learning, and intelligent systems');
+-- Disable foreign key checks to allow TRUNCATE
+SET FOREIGN_KEY_CHECKS = 0;
 
--- Insert Specializations
-INSERT INTO specializations (domain_id, specialization_name, description) VALUES
--- CS Specializations
-(1, 'Software Engineering', 'Software design, development, and testing'),
-(1, 'Database Systems', 'Database design, implementation, and management'),
-(1, 'Web Development', 'Modern web technologies and frameworks'),
-(1, 'Cloud Computing', 'Cloud platforms and distributed systems'),
--- DS Specializations
-(2, 'Machine Learning', 'ML algorithms and applications'),
+-- Clear existing data
+TRUNCATE TABLE student_course;
+TRUNCATE TABLE course_specialization;
+TRUNCATE TABLE specialization;
+TRUNCATE TABLE domain;
+TRUNCATE TABLE course;
+TRUNCATE TABLE student;
+TRUNCATE TABLE employee;
+
+-- Re-enable foreign key checks
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- ============================================================
+-- DOMAINS (8 domains)
+-- ============================================================
+INSERT INTO domain (domain_name, description) VALUES
+('Computer Science', 'Computing, programming, and software development'),
+('Data Science', 'Data analysis, machine learning, and statistics'),
+('Artificial Intelligence', 'AI, machine learning, and neural networks'),
+('Cybersecurity', 'Information security and network protection'),
+('Web Development', 'Frontend and backend web technologies'),
+('Mobile Development', 'iOS and Android application development'),
+('Cloud Computing', 'Cloud infrastructure and distributed systems'),
+('Business Analytics', 'Business intelligence and decision science');
+
+-- ============================================================
+-- SPECIALIZATIONS (20 specializations)
+-- ============================================================
+INSERT INTO specialization (domain_id, specialization_name, description) VALUES
+-- Computer Science
+(1, 'Software Engineering', 'Software design and development methodologies'),
+(1, 'Database Systems', 'Database design, SQL, and NoSQL technologies'),
+(1, 'Algorithms & Theory', 'Advanced algorithms and computational theory'),
+
+-- Data Science
+(2, 'Machine Learning', 'Supervised and unsupervised learning techniques'),
 (2, 'Big Data Analytics', 'Large-scale data processing and analysis'),
-(2, 'Statistical Analysis', 'Statistical methods and data interpretation'),
--- AI Specializations
-(3, 'Deep Learning', 'Neural networks and deep learning'),
-(3, 'Natural Language Processing', 'Text processing and understanding'),
-(3, 'Computer Vision', 'Image and video analysis');
+(2, 'Statistical Modeling', 'Statistical methods and predictive modeling'),
 
--- Insert Courses
-INSERT INTO courses (course_code, course_name, description, credits) VALUES
--- CS Courses
-('CS101', 'Introduction to Programming', 'Basic programming concepts', 4),
-('CS201', 'Data Structures', 'Advanced data structures and algorithms', 4),
-('CS301', 'Algorithm Design', 'Design and analysis of algorithms', 4),
-('CS302', 'Software Engineering', 'Software development lifecycle', 4),
-('CS303', 'Database Management Systems', 'Relational databases and SQL', 4),
-('CS304', 'Web Technologies', 'HTML, CSS, JavaScript, and frameworks', 3),
-('CS305', 'Cloud Computing Fundamentals', 'Cloud platforms and services', 3),
-('CS306', 'Advanced Database Systems', 'NoSQL, distributed databases', 3),
--- DS Courses
-('DS201', 'Introduction to Data Science', 'Data science fundamentals', 4),
-('DS301', 'Machine Learning', 'ML algorithms and techniques', 4),
-('DS302', 'Deep Learning', 'Neural networks and DL', 4),
-('DS303', 'Big Data Technologies', 'Hadoop, Spark, and big data tools', 4),
-('DS304', 'Statistical Methods', 'Probability and statistics', 3),
-('DS305', 'Data Visualization', 'Visual analytics and dashboards', 3),
+-- Artificial Intelligence
+(3, 'Deep Learning', 'Neural networks and deep learning frameworks'),
+(3, 'Natural Language Processing', 'Text processing and language understanding'),
+(3, 'Computer Vision', 'Image processing and visual recognition'),
+
+-- Cybersecurity
+(4, 'Network Security', 'Securing networks and communications'),
+(4, 'Application Security', 'Secure software development practices'),
+(4, 'Cryptography', 'Encryption and secure communications'),
+
+-- Web Development
+(5, 'Frontend Development', 'React, Angular, Vue.js development'),
+(5, 'Backend Development', 'Server-side programming and APIs'),
+(5, 'Full Stack Development', 'End-to-end web application development'),
+
+-- Mobile Development
+(6, 'iOS Development', 'Swift and iOS app development'),
+(6, 'Android Development', 'Kotlin and Android app development'),
+
+-- Cloud Computing
+(7, 'Cloud Architecture', 'Designing scalable cloud solutions'),
+(7, 'DevOps', 'CI/CD and infrastructure automation'),
+
+-- Business Analytics
+(8, 'Business Intelligence', 'BI tools and data visualization');
+
+-- ============================================================
+-- COURSES (40 courses)
+-- ============================================================
+INSERT INTO course (course_code, course_name, description, credits) VALUES
+-- Computer Science Courses
+('CS101', 'Introduction to Programming', 'Fundamentals of programming using Python', 4),
+('CS102', 'Data Structures', 'Arrays, linked lists, trees, and graphs', 4),
+('CS201', 'Algorithms', 'Algorithm design and analysis', 4),
+('CS202', 'Database Management Systems', 'Relational databases and SQL', 4),
+('CS301', 'Software Engineering', 'SDLC, design patterns, and best practices', 4),
+('CS302', 'Operating Systems', 'Process management and memory allocation', 4),
+
+-- Data Science Courses
+('DS101', 'Introduction to Data Science', 'Data analysis fundamentals', 3),
+('DS201', 'Machine Learning Fundamentals', 'Supervised and unsupervised learning', 4),
+('DS202', 'Statistical Analysis', 'Probability and statistical methods', 4),
+('DS301', 'Big Data Technologies', 'Hadoop, Spark, and distributed computing', 4),
+('DS302', 'Data Visualization', 'Tableau, D3.js, and visual analytics', 3),
+
 -- AI Courses
-('AI301', 'Artificial Intelligence', 'AI fundamentals and search', 4),
-('AI302', 'Natural Language Processing', 'Text mining and NLP', 4),
-('AI303', 'Computer Vision', 'Image processing and recognition', 4),
-('AI304', 'Reinforcement Learning', 'RL algorithms and applications', 3),
--- General Courses
-('MATH201', 'Linear Algebra', 'Matrices and vector spaces', 3),
-('MATH202', 'Calculus', 'Differential and integral calculus', 3);
+('AI201', 'Artificial Intelligence', 'AI concepts and applications', 4),
+('AI301', 'Deep Learning', 'Neural networks and TensorFlow', 4),
+('AI302', 'Natural Language Processing', 'Text mining and language models', 4),
+('AI303', 'Computer Vision', 'Image processing and CNN', 4),
 
--- Map Courses to Specializations
-INSERT INTO course_specializations (course_id, specialization_id, credits_toward_specialization) VALUES
--- Software Engineering Specialization
-(2, 1, 4),   -- Data Structures
-(3, 1, 4),   -- Algorithm Design
-(4, 1, 4),   -- Software Engineering
--- Database Systems Specialization
-(5, 2, 4),   -- Database Management Systems
-(8, 2, 3),   -- Advanced Database Systems
-(13, 2, 4),  -- Big Data Technologies
--- Web Development Specialization
-(6, 3, 3),   -- Web Technologies
-(15, 3, 3),  -- Data Visualization
-(5, 3, 2),   -- Database Management Systems (partial credits)
--- Cloud Computing Specialization
-(7, 4, 3),   -- Cloud Computing Fundamentals
-(13, 4, 4),  -- Big Data Technologies
--- Machine Learning Specialization
-(10, 5, 4),  -- Machine Learning
-(11, 5, 4),  -- Deep Learning
-(19, 5, 3),  -- Linear Algebra
--- Big Data Analytics Specialization
-(13, 6, 4),  -- Big Data Technologies
-(9, 6, 4),   -- Introduction to Data Science
-(14, 6, 3),  -- Statistical Methods
--- Statistical Analysis Specialization
-(14, 7, 3),  -- Statistical Methods
-(20, 7, 3),  -- Calculus
-(9, 7, 4),   -- Introduction to Data Science
--- Deep Learning Specialization
-(11, 8, 4),  -- Deep Learning
-(10, 8, 4),  -- Machine Learning
-(19, 8, 3),  -- Linear Algebra
--- NLP Specialization
-(16, 9, 4),  -- Natural Language Processing
-(15, 9, 4),  -- Artificial Intelligence
-(10, 9, 3),  -- Machine Learning
--- Computer Vision Specialization
-(17, 10, 4), -- Computer Vision
-(11, 10, 4), -- Deep Learning
-(15, 10, 4); -- Artificial Intelligence
+-- Cybersecurity Courses
+('SEC201', 'Network Security', 'Firewalls, VPNs, and network protocols', 4),
+('SEC202', 'Ethical Hacking', 'Penetration testing and security auditing', 3),
+('SEC301', 'Cryptography', 'Encryption algorithms and protocols', 4),
+('SEC302', 'Security Operations', 'SOC operations and incident response', 3),
 
--- Insert Students
-INSERT INTO students (roll_number, first_name, last_name, email, cgpa, total_credits, graduation_year) VALUES
-('MT2023001', 'Rahul', 'Sharma', 'rahul.sharma@example.com', 3.75, 48, 2025),
-('MT2023002', 'Priya', 'Patel', 'priya.patel@example.com', 3.85, 52, 2025),
-('MT2023003', 'Amit', 'Kumar', 'amit.kumar@example.com', 3.60, 44, 2025),
-('MT2023004', 'Sneha', 'Reddy', 'sneha.reddy@example.com', 3.90, 56, 2025),
-('MT2023005', 'Vikram', 'Singh', 'vikram.singh@example.com', 3.70, 48, 2025),
-('MT2023006', 'Anjali', 'Desai', 'anjali.desai@example.com', 3.65, 40, 2025),
-('MT2023007', 'Karan', 'Verma', 'karan.verma@example.com', 3.80, 52, 2025),
-('MT2023008', 'Neha', 'Gupta', 'neha.gupta@example.com', 3.55, 36, 2025),
-('MT2023009', 'Rohan', 'Mehta', 'rohan.mehta@example.com', 3.95, 60, 2025),
-('MT2023010', 'Divya', 'Joshi', 'divya.joshi@example.com', 3.72, 48, 2025);
+-- Web Development Courses
+('WEB101', 'HTML/CSS Fundamentals', 'Web markup and styling', 3),
+('WEB201', 'JavaScript Programming', 'Client-side scripting and ES6', 4),
+('WEB202', 'React Development', 'Building UIs with React', 4),
+('WEB301', 'Node.js Backend', 'Server-side JavaScript development', 4),
+('WEB302', 'Full Stack Project', 'Complete web application development', 4),
 
--- Enroll Students in Courses (ensuring some students exceed 20 credits in specializations)
+-- Mobile Development Courses
+('MOB201', 'iOS Development', 'Swift and SwiftUI programming', 4),
+('MOB202', 'Android Development', 'Kotlin and Android SDK', 4),
+('MOB301', 'Mobile UI/UX', 'Mobile interface design principles', 3),
+('MOB302', 'Cross-Platform Development', 'React Native and Flutter', 4),
 
--- Student 1 (Rahul) - Software Engineering Specialization (28 credits)
-INSERT INTO student_courses (student_id, course_id, academic_year, semester, grade) VALUES
-(1, 1, '2023-24', 'Fall', 'A'),
-(1, 2, '2023-24', 'Fall', 'A'),   -- 4 credits to Software Eng
-(1, 3, '2023-24', 'Spring', 'A-'), -- 4 credits to Software Eng
-(1, 4, '2024-25', 'Fall', 'A'),    -- 4 credits to Software Eng
-(1, 5, '2023-24', 'Spring', 'B+'),
-(1, 19, '2023-24', 'Fall', 'B+'),
-(1, 20, '2023-24', 'Fall', 'A-'),
-(1, 6, '2024-25', 'Fall', 'A'),
-(1, 7, '2024-25', 'Spring', 'B+'),
-(1, 10, '2024-25', 'Spring', 'A'),
-(1, 11, '2024-25', 'Spring', 'A-'),
-(1, 13, '2024-25', 'Fall', 'B+');
+-- Cloud Computing Courses
+('CLD201', 'Cloud Fundamentals', 'AWS, Azure, and GCP basics', 3),
+('CLD301', 'Cloud Architecture', 'Designing scalable cloud systems', 4),
+('CLD302', 'Containerization', 'Docker and Kubernetes', 4),
+('CLD303', 'DevOps Practices', 'CI/CD pipelines and automation', 4),
 
--- Student 2 (Priya) - Machine Learning + Deep Learning Specializations
-INSERT INTO student_courses (student_id, course_id, academic_year, semester, grade) VALUES
-(2, 1, '2023-24', 'Fall', 'A'),
-(2, 9, '2023-24', 'Fall', 'A'),
-(2, 10, '2023-24', 'Spring', 'A+'),  -- 4 credits to ML
-(2, 11, '2024-25', 'Fall', 'A'),     -- 4 credits to both ML and DL
-(2, 19, '2023-24', 'Fall', 'A'),     -- 3 credits to both ML and DL
-(2, 20, '2023-24', 'Spring', 'A-'),
-(2, 14, '2023-24', 'Spring', 'B+'),
-(2, 15, '2024-25', 'Fall', 'A-'),
-(2, 17, '2024-25', 'Spring', 'A'),
-(2, 2, '2023-24', 'Spring', 'A'),
-(2, 13, '2024-25', 'Fall', 'B+'),
-(2, 6, '2024-25', 'Spring', 'A-'),
-(2, 18, '2024-25', 'Spring', 'A-');
+-- Business Analytics Courses
+('BA201', 'Business Analytics', 'Data-driven decision making', 4),
+('BA301', 'Business Intelligence', 'BI tools and dashboards', 4),
+('BA302', 'Predictive Analytics', 'Forecasting and time series', 4),
 
--- Student 3 (Amit) - Database Systems Specialization (11 credits - below threshold)
-INSERT INTO student_courses (student_id, course_id, academic_year, semester, grade) VALUES
-(3, 1, '2023-24', 'Fall', 'B+'),
-(3, 2, '2023-24', 'Fall', 'B'),
-(3, 5, '2023-24', 'Spring', 'B+'),   -- 4 credits to DB Systems
-(3, 8, '2024-25', 'Fall', 'B'),      -- 3 credits to DB Systems
-(3, 6, '2023-24', 'Spring', 'A-'),
-(3, 19, '2023-24', 'Fall', 'B'),
-(3, 20, '2023-24', 'Spring', 'B+'),
-(3, 10, '2024-25', 'Fall', 'B+'),
-(3, 14, '2024-25', 'Spring', 'B'),
-(3, 15, '2024-25', 'Fall', 'A-'),
-(3, 4, '2024-25', 'Spring', 'B+');
+-- General/Elective Courses
+('GEN101', 'Communication Skills', 'Professional communication', 2),
+('GEN102', 'Ethics in Technology', 'Technology ethics and responsibility', 2),
+('GEN201', 'Project Management', 'Agile and project planning', 3),
+('GEN301', 'Entrepreneurship', 'Startup fundamentals', 3);
 
--- Student 4 (Sneha) - Big Data Analytics Specialization (24 credits)
-INSERT INTO student_courses (student_id, course_id, academic_year, semester, grade) VALUES
-(4, 1, '2023-24', 'Fall', 'A+'),
-(4, 9, '2023-24', 'Fall', 'A'),      -- 4 credits to Big Data
-(4, 13, '2023-24', 'Spring', 'A'),   -- 4 credits to Big Data
-(4, 14, '2023-24', 'Spring', 'A-'),  -- 3 credits to Big Data
-(4, 10, '2024-25', 'Fall', 'A+'),
-(4, 11, '2024-25', 'Fall', 'A'),
-(4, 19, '2023-24', 'Fall', 'A'),
-(4, 20, '2023-24', 'Spring', 'A-'),
-(4, 15, '2024-25', 'Spring', 'A'),
-(4, 2, '2023-24', 'Spring', 'A-'),
-(4, 5, '2024-25', 'Fall', 'A'),
-(4, 6, '2024-25', 'Spring', 'A-'),
-(4, 17, '2024-25', 'Spring', 'A-'),
-(4, 18, '2024-25', 'Fall', 'A');
+-- ============================================================
+-- COURSE-SPECIALIZATION MAPPINGS (Multiple per specialization)
+-- ============================================================
+INSERT INTO course_specialization (course_id, specialization_id, credits_toward_specialization) VALUES
+-- Software Engineering
+(5, 1, 4), (6, 1, 4), (39, 1, 3),
 
--- Student 5 (Vikram) - Computer Vision Specialization (24 credits)
-INSERT INTO student_courses (student_id, course_id, academic_year, semester, grade) VALUES
-(5, 1, '2023-24', 'Fall', 'A-'),
-(5, 15, '2023-24', 'Fall', 'A'),     -- 4 credits to CV
-(5, 17, '2023-24', 'Spring', 'A'),   -- 4 credits to CV
-(5, 11, '2024-25', 'Fall', 'A-'),    -- 4 credits to CV
-(5, 10, '2024-25', 'Spring', 'A'),
-(5, 19, '2023-24', 'Fall', 'B+'),
-(5, 20, '2023-24', 'Spring', 'A-'),
-(5, 2, '2023-24', 'Spring', 'A'),
-(5, 9, '2024-25', 'Fall', 'B+'),
-(5, 13, '2024-25', 'Spring', 'B+'),
-(5, 6, '2024-25', 'Fall', 'A-'),
-(5, 14, '2024-25', 'Spring', 'A-');
+-- Database Systems
+(4, 2, 4), (11, 2, 4),
 
--- Student 6 (Anjali) - No specialization (scattered courses)
-INSERT INTO student_courses (student_id, course_id, academic_year, semester, grade) VALUES
-(6, 1, '2023-24', 'Fall', 'B+'),
-(6, 2, '2023-24', 'Fall', 'B'),
-(6, 5, '2023-24', 'Spring', 'B+'),
-(6, 10, '2024-25', 'Fall', 'A-'),
-(6, 19, '2023-24', 'Fall', 'B'),
-(6, 20, '2023-24', 'Spring', 'B+'),
-(6, 6, '2024-25', 'Spring', 'A-'),
-(6, 14, '2024-25', 'Fall', 'B'),
-(6, 15, '2024-25', 'Spring', 'A'),
-(6, 4, '2023-24', 'Spring', 'B+');
+-- Algorithms & Theory
+(3, 3, 4), (6, 3, 4),
 
--- Student 7 (Karan) - Web Development Specialization (21 credits)
-INSERT INTO student_courses (student_id, course_id, academic_year, semester, grade) VALUES
-(7, 1, '2023-24', 'Fall', 'A'),
-(7, 6, '2023-24', 'Fall', 'A+'),     -- 3 credits to Web Dev
-(7, 15, '2023-24', 'Spring', 'A'),   -- 3 credits to Web Dev
-(7, 5, '2024-25', 'Fall', 'A'),      -- 2 credits to Web Dev (partial)
-(7, 2, '2023-24', 'Spring', 'A-'),
-(7, 3, '2024-25', 'Spring', 'A'),
-(7, 4, '2024-25', 'Fall', 'A-'),
-(7, 7, '2024-25', 'Spring', 'A'),
-(7, 19, '2023-24', 'Fall', 'A-'),
-(7, 20, '2023-24', 'Spring', 'B+'),
-(7, 10, '2024-25', 'Fall', 'A'),
-(7, 11, '2024-25', 'Spring', 'A-'),
-(7, 13, '2024-25', 'Fall', 'B+');
+-- Machine Learning
+(8, 4, 4), (9, 4, 4), (12, 4, 4), (13, 4, 4),
 
--- Student 8 (Neha) - No specialization
-INSERT INTO student_courses (student_id, course_id, academic_year, semester, grade) VALUES
-(8, 1, '2023-24', 'Fall', 'B'),
-(8, 2, '2023-24', 'Spring', 'B+'),
-(8, 5, '2024-25', 'Fall', 'B'),
-(8, 19, '2023-24', 'Fall', 'B-'),
-(8, 20, '2023-24', 'Spring', 'B'),
-(8, 6, '2024-25', 'Spring', 'A-'),
-(8, 10, '2024-25', 'Fall', 'B+'),
-(8, 14, '2024-25', 'Spring', 'B'),
-(8, 9, '2023-24', 'Spring', 'B+');
+-- Big Data Analytics
+(10, 5, 4), (7, 5, 3), (11, 5, 3),
 
--- Student 9 (Rohan) - Database + Cloud Computing Specializations (25 and 21 credits)
-INSERT INTO student_courses (student_id, course_id, academic_year, semester, grade) VALUES
-(9, 1, '2023-24', 'Fall', 'A+'),
-(9, 5, '2023-24', 'Fall', 'A+'),     -- 4 credits to DB Systems
-(9, 8, '2023-24', 'Spring', 'A'),    -- 3 credits to DB Systems
-(9, 13, '2024-25', 'Fall', 'A'),     -- 4 credits to both DB and Cloud
-(9, 7, '2024-25', 'Spring', 'A'),    -- 3 credits to Cloud
-(9, 2, '2023-24', 'Spring', 'A-'),
-(9, 3, '2024-25', 'Fall', 'A'),
-(9, 4, '2024-25', 'Spring', 'A-'),
-(9, 6, '2024-25', 'Fall', 'A'),
-(9, 10, '2024-25', 'Spring', 'A+'),
-(9, 11, '2024-25', 'Fall', 'A'),
-(9, 19, '2023-24', 'Fall', 'A'),
-(9, 20, '2023-24', 'Spring', 'A-'),
-(9, 15, '2024-25', 'Spring', 'A'),
-(9, 17, '2024-25', 'Fall', 'A-');
+-- Statistical Modeling
+(9, 6, 4), (35, 6, 4), (36, 6, 4),
 
--- Student 10 (Divya) - Statistical Analysis Specialization (22 credits)
-INSERT INTO student_courses (student_id, course_id, academic_year, semester, grade) VALUES
-(10, 1, '2023-24', 'Fall', 'A-'),
-(10, 9, '2023-24', 'Fall', 'A'),     -- 4 credits to Statistical Analysis
-(10, 14, '2023-24', 'Spring', 'A-'), -- 3 credits to Statistical Analysis
-(10, 20, '2023-24', 'Spring', 'A'),  -- 3 credits to Statistical Analysis
-(10, 19, '2023-24', 'Fall', 'A-'),
-(10, 2, '2023-24', 'Spring', 'A'),
-(10, 10, '2024-25', 'Fall', 'A'),
-(10, 11, '2024-25', 'Spring', 'A-'),
-(10, 5, '2024-25', 'Fall', 'B+'),
-(10, 6, '2024-25', 'Spring', 'A'),
-(10, 13, '2024-25', 'Fall', 'A-'),
-(10, 15, '2024-25', 'Spring', 'A-');
+-- Deep Learning
+(13, 7, 4), (12, 7, 4), (14, 7, 4),
 
--- Insert Admin Employees
-INSERT INTO employees (email, first_name, last_name, department, role) VALUES
-('admin@college.edu', 'Admin', 'User', 'Administration', 'Admin'),
-('john.doe@college.edu', 'John', 'Doe', 'Administration', 'Manager'),
-('jane.smith@college.edu', 'Jane', 'Smith', 'Academics', 'Coordinator');
+-- NLP
+(14, 8, 4), (13, 8, 4), (2, 8, 4),
+
+-- Computer Vision
+(15, 9, 4), (13, 9, 4), (14, 9, 3),
+
+-- Network Security
+(16, 10, 4), (17, 10, 3), (18, 10, 4),
+
+-- Application Security
+(19, 11, 3), (5, 11, 4), (17, 11, 3),
+
+-- Cryptography
+(18, 12, 4), (16, 12, 4),
+
+-- Frontend Development
+(20, 13, 3), (21, 13, 4), (22, 13, 4),
+
+-- Backend Development
+(23, 14, 4), (4, 14, 4), (24, 14, 4),
+
+-- Full Stack Development
+(24, 15, 4), (22, 15, 4), (23, 15, 4), (21, 15, 4),
+
+-- iOS Development
+(25, 16, 4), (27, 16, 3), (28, 16, 4),
+
+-- Android Development
+(26, 17, 4), (27, 17, 3), (28, 17, 4),
+
+-- Cloud Architecture
+(30, 18, 4), (31, 18, 4), (29, 18, 3),
+
+-- DevOps
+(32, 19, 4), (31, 19, 4), (33, 19, 4),
+
+-- Business Intelligence
+(34, 20, 4), (35, 20, 4), (11, 20, 3);
+
+-- ============================================================
+-- STUDENTS (50 students)
+-- ============================================================
+INSERT INTO student (roll_number, first_name, last_name, email, cgpa, total_credits, graduation_year) VALUES
+('MT2024001', 'Arjun', 'Sharma', 'arjun.sharma@university.edu', 3.85, 64, 2024),
+('MT2024002', 'Priya', 'Patel', 'priya.patel@university.edu', 3.92, 68, 2024),
+('MT2024003', 'Rahul', 'Kumar', 'rahul.kumar@university.edu', 3.67, 60, 2024),
+('MT2024004', 'Sneha', 'Reddy', 'sneha.reddy@university.edu', 3.78, 72, 2024),
+('MT2024005', 'Vikram', 'Singh', 'vikram.singh@university.edu', 3.55, 56, 2024),
+('MT2024006', 'Ananya', 'Gupta', 'ananya.gupta@university.edu', 3.95, 76, 2024),
+('MT2024007', 'Karthik', 'Menon', 'karthik.menon@university.edu', 3.72, 64, 2024),
+('MT2024008', 'Divya', 'Iyer', 'divya.iyer@university.edu', 3.88, 68, 2024),
+('MT2024009', 'Rohan', 'Verma', 'rohan.verma@university.edu', 3.61, 60, 2024),
+('MT2024010', 'Isha', 'Nair', 'isha.nair@university.edu', 3.83, 72, 2024),
+('MT2024011', 'Aditya', 'Joshi', 'aditya.joshi@university.edu', 3.76, 64, 2024),
+('MT2024012', 'Meera', 'Desai', 'meera.desai@university.edu', 3.91, 76, 2024),
+('MT2024013', 'Siddharth', 'Rao', 'siddharth.rao@university.edu', 3.58, 52, 2024),
+('MT2024014', 'Kavya', 'Pillai', 'kavya.pillai@university.edu', 3.87, 68, 2024),
+('MT2024015', 'Nikhil', 'Shah', 'nikhil.shah@university.edu', 3.69, 60, 2024),
+('MT2024016', 'Ritu', 'Agarwal', 'ritu.agarwal@university.edu', 3.94, 80, 2024),
+('MT2024017', 'Akash', 'Pandey', 'akash.pandey@university.edu', 3.52, 48, 2024),
+('MT2024018', 'Pooja', 'Malhotra', 'pooja.malhotra@university.edu', 3.81, 72, 2024),
+('MT2024019', 'Varun', 'Kapoor', 'varun.kapoor@university.edu', 3.73, 64, 2024),
+('MT2024020', 'Tanvi', 'Bhat', 'tanvi.bhat@university.edu', 3.89, 76, 2024),
+('MT2025021', 'Amit', 'Thakur', 'amit.thakur@university.edu', 3.65, 48, 2025),
+('MT2025022', 'Neha', 'Chopra', 'neha.chopra@university.edu', 3.77, 56, 2025),
+('MT2025023', 'Pranav', 'Kulkarni', 'pranav.kulkarni@university.edu', 3.82, 52, 2025),
+('MT2025024', 'Simran', 'Bajaj', 'simran.bajaj@university.edu', 3.91, 60, 2025),
+('MT2025025', 'Harsh', 'Saxena', 'harsh.saxena@university.edu', 3.59, 44, 2025),
+('MT2025026', 'Aisha', 'Khan', 'aisha.khan@university.edu', 3.86, 56, 2025),
+('MT2025027', 'Gaurav', 'Mishra', 'gaurav.mishra@university.edu', 3.71, 48, 2025),
+('MT2025028', 'Shruti', 'Bansal', 'shruti.bansal@university.edu', 3.93, 60, 2025),
+('MT2025029', 'Manish', 'Tiwari', 'manish.tiwari@university.edu', 3.64, 44, 2025),
+('MT2025030', 'Radhika', 'Ghosh', 'radhika.ghosh@university.edu', 3.88, 56, 2025),
+('MT2025031', 'Yash', 'Sinha', 'yash.sinha@university.edu', 3.75, 52, 2025),
+('MT2025032', 'Anjali', 'Yadav', 'anjali.yadav@university.edu', 3.80, 56, 2025),
+('MT2025033', 'Vivek', 'Chauhan', 'vivek.chauhan@university.edu', 3.57, 40, 2025),
+('MT2025034', 'Nidhi', 'Srivastava', 'nidhi.srivastava@university.edu', 3.84, 52, 2025),
+('MT2025035', 'Kunal', 'Ahuja', 'kunal.ahuja@university.edu', 3.68, 48, 2025),
+('MT2025036', 'Sakshi', 'Kaur', 'sakshi.kaur@university.edu', 3.92, 60, 2025),
+('MT2025037', 'Abhishek', 'Gupta', 'abhishek.gupta@university.edu', 3.53, 36, 2025),
+('MT2025038', 'Riya', 'Mehta', 'riya.mehta@university.edu', 3.79, 52, 2025),
+('MT2025039', 'Sameer', 'Singhal', 'sameer.singhal@university.edu', 3.66, 44, 2025),
+('MT2025040', 'Kriti', 'Arora', 'kriti.arora@university.edu', 3.87, 56, 2025),
+('MT2026041', 'Mohit', 'Bhardwaj', 'mohit.bhardwaj@university.edu', 3.70, 32, 2026),
+('MT2026042', 'Preeti', 'Jain', 'preeti.jain@university.edu', 3.81, 36, 2026),
+('MT2026043', 'Rajat', 'Bose', 'rajat.bose@university.edu', 3.63, 28, 2026),
+('MT2026044', 'Tanya', 'Sethi', 'tanya.sethi@university.edu', 3.90, 40, 2026),
+('MT2026045', 'Vishal', 'Dutta', 'vishal.dutta@university.edu', 3.56, 24, 2026),
+('MT2026046', 'Megha', 'Kapoor', 'megha.kapoor@university.edu', 3.85, 36, 2026),
+('MT2026047', 'Naveen', 'Agarwal', 'naveen.agarwal@university.edu', 3.72, 32, 2026),
+('MT2026048', 'Pallavi', 'Roy', 'pallavi.roy@university.edu', 3.88, 40, 2026),
+('MT2026049', 'Saurabh', 'Sharma', 'saurabh.sharma@university.edu', 3.60, 28, 2026),
+('MT2026050', 'Urmila', 'Patel', 'urmila.patel@university.edu', 3.93, 40, 2026);
+
+-- ============================================================
+-- STUDENT-COURSE ENROLLMENTS (200+ enrollments)
+-- ============================================================
+-- Each student enrolled in multiple courses with grades
+INSERT INTO student_course (student_id, course_id, academic_year, semester, grade) VALUES
+-- Student 1 (MT2024001) - ML specialization
+(1, 1, '2022-23', 'Fall', 'A'), (1, 2, '2022-23', 'Fall', 'A-'),
+(1, 8, '2022-23', 'Spring', 'A'), (1, 9, '2023-24', 'Fall', 'A-'),
+(1, 12, '2023-24', 'Fall', 'B+'), (1, 13, '2023-24', 'Spring', 'A'),
+(1, 7, '2023-24', 'Spring', 'A-'), (1, 10, '2024-25', 'Fall', 'A'),
+
+-- Student 2 (MT2024002) - Full Stack Development
+(2, 1, '2022-23', 'Fall', 'A'), (2, 20, '2022-23', 'Spring', 'A'),
+(2, 21, '2023-24', 'Fall', 'A-'), (2, 22, '2023-24', 'Fall', 'A'),
+(2, 23, '2023-24', 'Spring', 'A'), (2, 24, '2023-24', 'Spring', 'A'),
+(2, 4, '2024-25', 'Fall', 'A-'), (2, 27, '2024-25', 'Fall', 'B+'),
+
+-- Student 3 (MT2024003) - Cybersecurity
+(3, 1, '2022-23', 'Fall', 'B+'), (3, 2, '2022-23', 'Spring', 'A-'),
+(3, 16, '2023-24', 'Fall', 'A'), (3, 17, '2023-24', 'Fall', 'A-'),
+(3, 18, '2023-24', 'Spring', 'B+'), (3, 19, '2024-25', 'Fall', 'A'),
+(3, 5, '2024-25', 'Fall', 'B+'),
+
+-- Student 4 (MT2024004) - Data Science
+(4, 1, '2022-23', 'Fall', 'A'), (4, 7, '2022-23', 'Spring', 'A'),
+(4, 8, '2023-24', 'Fall', 'A-'), (4, 9, '2023-24', 'Fall', 'A'),
+(4, 10, '2023-24', 'Spring', 'A-'), (4, 11, '2023-24', 'Spring', 'A'),
+(4, 34, '2024-25', 'Fall', 'A'), (4, 35, '2024-25', 'Fall', 'A-'),
+
+-- Student 5 (MT2024005) - Software Engineering
+(5, 1, '2022-23', 'Fall', 'B'), (5, 2, '2022-23', 'Spring', 'B+'),
+(5, 3, '2023-24', 'Fall', 'B'), (5, 5, '2023-24', 'Fall', 'B+'),
+(5, 6, '2023-24', 'Spring', 'B'), (5, 39, '2024-25', 'Fall', 'B+'),
+
+-- Continuing with more students...
+-- Student 6-10
+(6, 1, '2022-23', 'Fall', 'A'), (6, 13, '2022-23', 'Spring', 'A'),
+(6, 14, '2023-24', 'Fall', 'A-'), (6, 15, '2023-24', 'Fall', 'A'),
+(6, 12, '2023-24', 'Spring', 'A'), (6, 2, '2024-25', 'Fall', 'A-'),
+
+(7, 1, '2022-23', 'Fall', 'B+'), (7, 4, '2022-23', 'Spring', 'A-'),
+(7, 2, '2023-24', 'Fall', 'B+'), (7, 5, '2023-24', 'Spring', 'A'),
+(7, 6, '2024-25', 'Fall', 'B+'), (7, 39, '2024-25', 'Fall', 'A-'),
+
+(8, 1, '2022-23', 'Fall', 'A'), (8, 20, '2022-23', 'Spring', 'A'),
+(8, 21, '2023-24', 'Fall', 'A-'), (8, 22, '2023-24', 'Fall', 'A'),
+(8, 23, '2023-24', 'Spring', 'A-'), (8, 24, '2024-25', 'Fall', 'A'),
+
+(9, 1, '2022-23', 'Fall', 'B+'), (9, 7, '2022-23', 'Spring', 'B+'),
+(9, 8, '2023-24', 'Fall', 'A-'), (9, 9, '2023-24', 'Spring', 'B+'),
+(9, 12, '2024-25', 'Fall', 'A-'),
+
+(10, 1, '2022-23', 'Fall', 'A'), (10, 25, '2022-23', 'Spring', 'A-'),
+(10, 26, '2023-24', 'Fall', 'A'), (10, 27, '2023-24', 'Spring', 'A'),
+(10, 28, '2024-25', 'Fall', 'A-'),
+
+-- Students 11-20
+(11, 1, '2022-23', 'Fall', 'A-'), (11, 29, '2022-23', 'Spring', 'A'),
+(11, 30, '2023-24', 'Fall', 'A'), (11, 31, '2023-24', 'Spring', 'A-'),
+(11, 32, '2024-25', 'Fall', 'A'),
+
+(12, 1, '2022-23', 'Fall', 'A'), (12, 8, '2022-23', 'Spring', 'A'),
+(12, 9, '2023-24', 'Fall', 'A'), (12, 12, '2023-24', 'Spring', 'A-'),
+(12, 13, '2024-25', 'Fall', 'A'),
+
+(13, 1, '2022-23', 'Fall', 'B'), (13, 2, '2022-23', 'Spring', 'B+'),
+(13, 3, '2023-24', 'Fall', 'B'), (13, 20, '2024-25', 'Fall', 'B+'),
+
+(14, 1, '2022-23', 'Fall', 'A'), (14, 7, '2022-23', 'Spring', 'A-'),
+(14, 8, '2023-24', 'Fall', 'A'), (14, 9, '2023-24', 'Spring', 'A'),
+(14, 11, '2024-25', 'Fall', 'A-'),
+
+(15, 1, '2022-23', 'Fall', 'B+'), (15, 20, '2022-23', 'Spring', 'A-'),
+(15, 21, '2023-24', 'Fall', 'A'), (15, 22, '2024-25', 'Fall', 'A-'),
+
+(16, 1, '2022-23', 'Fall', 'A'), (16, 13, '2022-23', 'Spring', 'A'),
+(16, 14, '2023-24', 'Fall', 'A'), (16, 15, '2023-24', 'Spring', 'A'),
+(16, 12, '2024-25', 'Fall', 'A'), (16, 2, '2024-25', 'Fall', 'A-'),
+
+(17, 1, '2022-23', 'Fall', 'B'), (17, 2, '2022-23', 'Spring', 'B'),
+(17, 20, '2023-24', 'Fall', 'B+'), (17, 38, '2024-25', 'Fall', 'B'),
+
+(18, 1, '2022-23', 'Fall', 'A'), (18, 16, '2022-23', 'Spring', 'A-'),
+(18, 17, '2023-24', 'Fall', 'A'), (18, 18, '2023-24', 'Spring', 'A'),
+(18, 19, '2024-25', 'Fall', 'A-'),
+
+(19, 1, '2022-23', 'Fall', 'B+'), (19, 4, '2022-23', 'Spring', 'A-'),
+(19, 2, '2023-24', 'Fall', 'B+'), (19, 5, '2023-24', 'Spring', 'A'),
+(19, 6, '2024-25', 'Fall', 'B+'),
+
+(20, 1, '2022-23', 'Fall', 'A'), (20, 8, '2022-23', 'Spring', 'A'),
+(20, 9, '2023-24', 'Fall', 'A-'), (20, 12, '2023-24', 'Spring', 'A'),
+(20, 13, '2024-25', 'Fall', 'A'), (20, 10, '2024-25', 'Fall', 'A-'),
+
+-- Students 21-30 (2025 batch - fewer courses)
+(21, 1, '2023-24', 'Fall', 'B+'), (21, 2, '2023-24', 'Spring', 'A-'),
+(21, 7, '2024-25', 'Fall', 'A'), (21, 8, '2024-25', 'Fall', 'B+'),
+
+(22, 1, '2023-24', 'Fall', 'A-'), (22, 20, '2023-24', 'Spring', 'A'),
+(22, 21, '2024-25', 'Fall', 'A'), (22, 22, '2024-25', 'Fall', 'A-'),
+
+(23, 1, '2023-24', 'Fall', 'A'), (23, 2, '2023-24', 'Spring', 'A-'),
+(23, 16, '2024-25', 'Fall', 'A'), (23, 17, '2024-25', 'Fall', 'B+'),
+
+(24, 1, '2023-24', 'Fall', 'A'), (24, 7, '2023-24', 'Spring', 'A'),
+(24, 8, '2024-25', 'Fall', 'A'), (24, 9, '2024-25', 'Fall', 'A-'),
+
+(25, 1, '2023-24', 'Fall', 'B'), (25, 2, '2023-24', 'Spring', 'B+'),
+(25, 20, '2024-25', 'Fall', 'B+'),
+
+(26, 1, '2023-24', 'Fall', 'A'), (26, 13, '2023-24', 'Spring', 'A-'),
+(26, 14, '2024-25', 'Fall', 'A'), (26, 12, '2024-25', 'Fall', 'A'),
+
+(27, 1, '2023-24', 'Fall', 'B+'), (27, 20, '2023-24', 'Spring', 'A-'),
+(27, 21, '2024-25', 'Fall', 'A'),
+
+(28, 1, '2023-24', 'Fall', 'A'), (28, 7, '2023-24', 'Spring', 'A'),
+(28, 8, '2024-25', 'Fall', 'A-'), (28, 9, '2024-25', 'Fall', 'A'),
+
+(29, 1, '2023-24', 'Fall', 'B+'), (29, 2, '2023-24', 'Spring', 'B+'),
+(29, 3, '2024-25', 'Fall', 'A-'),
+
+(30, 1, '2023-24', 'Fall', 'A'), (30, 25, '2023-24', 'Spring', 'A-'),
+(30, 26, '2024-25', 'Fall', 'A'),
+
+-- Students 31-40
+(31, 1, '2023-24', 'Fall', 'A-'), (31, 29, '2023-24', 'Spring', 'A'),
+(31, 30, '2024-25', 'Fall', 'A'), (31, 31, '2024-25', 'Fall', 'A-'),
+
+(32, 1, '2023-24', 'Fall', 'A'), (32, 8, '2023-24', 'Spring', 'A-'),
+(32, 9, '2024-25', 'Fall', 'A'),
+
+(33, 1, '2023-24', 'Fall', 'B'), (33, 2, '2023-24', 'Spring', 'B+'),
+(33, 20, '2024-25', 'Fall', 'B'),
+
+(34, 1, '2023-24', 'Fall', 'A'), (34, 7, '2023-24', 'Spring', 'A-'),
+(34, 8, '2024-25', 'Fall', 'A'),
+
+(35, 1, '2023-24', 'Fall', 'B+'), (35, 20, '2023-24', 'Spring', 'A-'),
+(35, 21, '2024-25', 'Fall', 'A'),
+
+(36, 1, '2023-24', 'Fall', 'A'), (36, 13, '2023-24', 'Spring', 'A'),
+(36, 14, '2024-25', 'Fall', 'A-'), (36, 12, '2024-25', 'Fall', 'A'),
+
+(37, 1, '2023-24', 'Fall', 'B'), (37, 2, '2023-24', 'Spring', 'B'),
+(37, 38, '2024-25', 'Fall', 'B+'),
+
+(38, 1, '2023-24', 'Fall', 'A-'), (38, 16, '2023-24', 'Spring', 'A'),
+(38, 17, '2024-25', 'Fall', 'A-'),
+
+(39, 1, '2023-24', 'Fall', 'B+'), (39, 4, '2023-24', 'Spring', 'A-'),
+(39, 2, '2024-25', 'Fall', 'A'),
+
+(40, 1, '2023-24', 'Fall', 'A'), (40, 8, '2023-24', 'Spring', 'A'),
+(40, 9, '2024-25', 'Fall', 'A-'),
+
+-- Students 41-50 (2026 batch - very few courses)
+(41, 1, '2024-25', 'Fall', 'B+'), (41, 2, '2024-25', 'Fall', 'A-'),
+(41, 20, '2024-25', 'Fall', 'A'),
+
+(42, 1, '2024-25', 'Fall', 'A'), (42, 7, '2024-25', 'Fall', 'A-'),
+(42, 2, '2024-25', 'Fall', 'A'),
+
+(43, 1, '2024-25', 'Fall', 'B+'), (43, 2, '2024-25', 'Fall', 'B+'),
+
+(44, 1, '2024-25', 'Fall', 'A'), (44, 13, '2024-25', 'Fall', 'A'),
+(44, 7, '2024-25', 'Fall', 'A-'),
+
+(45, 1, '2024-25', 'Fall', 'B'), (45, 2, '2024-25', 'Fall', 'B+'),
+
+(46, 1, '2024-25', 'Fall', 'A'), (46, 20, '2024-25', 'Fall', 'A-'),
+(46, 8, '2024-25', 'Fall', 'A'),
+
+(47, 1, '2024-25', 'Fall', 'B+'), (47, 2, '2024-25', 'Fall', 'A-'),
+
+(48, 1, '2024-25', 'Fall', 'A'), (48, 7, '2024-25', 'Fall', 'A'),
+(48, 29, '2024-25', 'Fall', 'A-'),
+
+(49, 1, '2024-25', 'Fall', 'B+'), (49, 2, '2024-25', 'Fall', 'B+'),
+
+(50, 1, '2024-25', 'Fall', 'A'), (50, 13, '2024-25', 'Fall', 'A'),
+(50, 14, '2024-25', 'Fall', 'A-');
+
+-- ============================================================
+-- EMPLOYEES (5 employees)
+-- ============================================================
+INSERT INTO employee (employee_name, email, department, employee_role) VALUES
+('Dr. Rajesh Kumar', 'rajesh.kumar@university.edu', 'Computer Science', 'Professor'),
+('Dr. Lakshmi Iyer', 'lakshmi.iyer@university.edu', 'Data Science', 'Associate Professor'),
+('Dr. Amit Deshmukh', 'amit.deshmukh@university.edu', 'Administration', 'Dean'),
+('Suresh Nambiar', 'suresh.nambiar@university.edu', 'IT Support', 'System Administrator'),
+('Priya Menon', 'priya.menon@university.edu', 'Admissions', 'Coordinator');

@@ -26,14 +26,8 @@ const Header = () => {
           <Link to="/courses" className={isActive('/courses') ? 'nav-link active' : 'nav-link'}>
             Courses
           </Link>
-          <Link to="/enrollments" className={isActive('/enrollments') ? 'nav-link active' : 'nav-link'}>
-            Enrollments
-          </Link>
           <Link to="/domains" className={isActive('/domains') ? 'nav-link active' : 'nav-link'}>
-            Domains
-          </Link>
-          <Link to="/admin/reports" className={isActive('/admin') ? 'nav-link active' : 'nav-link'}>
-            Reports
+            Domain Specialization
           </Link>
         </nav>
         {user && (
